@@ -1,4 +1,4 @@
-const AWS = require('aws-sdk');
+import AWS from 'aws-sdk';
 
 const s3 = new AWS.S3({
   endpoint: 'https://thetribeug.ams3.digitaloceanspaces.com', // Use your region endpoint
@@ -6,8 +6,13 @@ const s3 = new AWS.S3({
   secretAccessKey: process.env.SPACES_SECRET,
 });
 
-exports.handler = async function (event, context) {
-  const { fileName } = JSON.parse(event.body);  // Only fileName is needed for access
+export default async function handler(req, res) {
+  if (req.method !== 'POST') {
+    // Ensure only POST requests are allowed
+    return res.status(405).json({ error: 'Method Not Allowed' });
+  }
+
+  const { fileName } = req.body;  // Access fileName directly
 
   const params = {
     Bucket: 'thetribeug', // Replace with your Space name
@@ -16,12 +21,9 @@ exports.handler = async function (event, context) {
   };
 
   try {
-    const url = s3.getSignedUrl('getObject', params);  // For accessing the object
-    return {
-      statusCode: 200,
-      body: JSON.stringify({ url }),
-    };
+    const url = s3.getSignedUrl('getObject', params);  // Generate the signed URL
+    res.status(200).json({ url });
   } catch (error) {
-    return { statusCode: 500, body: JSON.stringify(error) };
+    res.status(500).json({ error: 'Internal Server Error', details: error.message });
   }
-};
+}
