@@ -13,7 +13,7 @@ export default async function handler(req, res) {
     const params = {
       Bucket: 'thetribeug',
       Key: fileName,
-      Expires: 60, // Link valid for 60 seconds
+      Expires: 3600, // Link valid for 60 seconds
       ContentType: fileType,
     };
 
