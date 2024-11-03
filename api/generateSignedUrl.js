@@ -1,7 +1,7 @@
 const AWS = require('aws-sdk');
 
 const s3 = new AWS.S3({
-  endpoint: 'https://thetribeug.ams3.digitaloceanspaces.com', // DigitalOcean Spaces endpoint
+  endpoint: 'https://ams3.digitaloceanspaces.com', // DigitalOcean Spaces endpoint
   accessKeyId: process.env.SPACES_KEY,
   secretAccessKey: process.env.SPACES_SECRET,
 });
@@ -15,6 +15,7 @@ export default async function handler(req, res) {
       Key: fileName,
       Expires: 3600, // Link valid for 60 seconds
       ContentType: fileType,
+      ACL: 'private',  
     };
 
     try {
