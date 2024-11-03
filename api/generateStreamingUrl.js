@@ -4,12 +4,11 @@ const s3 = new AWS.S3({
   endpoint: 'https://ams3.digitaloceanspaces.com',
   accessKeyId: process.env.SPACES_KEY,
   secretAccessKey: process.env.SPACES_SECRET,
-  signatureVersion: 'v2'
 });
 
 export default async function handler(req, res) {
   if (req.method !== 'POST') {
-    return res.status(405).json({ error: 'Methods Not Allowed' });
+    return res.status(405).json({ error: 'Method Not Allowed' });
   }
 
   const { fileName } = req.body;
