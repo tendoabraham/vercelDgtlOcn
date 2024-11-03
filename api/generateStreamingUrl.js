@@ -5,7 +5,8 @@ const spacesEndpoint = new aws.Endpoint('ams3.digitaloceanspaces.com');
 const s3 = new aws.S3({
   endpoint: spacesEndpoint,
   accessKeyId: process.env.SPACES_KEY,         // Use environment variables for security
-  secretAccessKey: process.env.SPACES_SECRET,  // Use environment variables for security
+  secretAccessKey: process.env.SPACES_SECRET, 
+  s3ForcePathStyle: true, // Use environment variables for security
 });
 
 // Handler function for generating a signed URL
