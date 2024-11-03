@@ -4,6 +4,7 @@ const s3 = new AWS.S3({
   endpoint: 'https://ams3.digitaloceanspaces.com',
   accessKeyId: process.env.SPACES_KEY,
   secretAccessKey: process.env.SPACES_SECRET,
+  signatureVersion: 'v2'
 });
 
 export default async function handler(req, res) {
