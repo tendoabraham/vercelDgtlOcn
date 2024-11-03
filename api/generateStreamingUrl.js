@@ -1,38 +1,34 @@
-import AWS from 'aws-sdk';
+const AWS = require('aws-sdk');
 
-// Configure the S3 client to use DigitalOcean Spaces
-const spacesEndpoint = new aws.Endpoint('ams3.digitaloceanspaces.com');
-const s3 = new aws.S3({
-  endpoint: spacesEndpoint,
-  accessKeyId: process.env.SPACES_KEY,         // Use environment variables for security
-  secretAccessKey: process.env.SPACES_SECRET, 
-  s3ForcePathStyle: true, // Use environment variables for security
+const s3 = new AWS.S3({
+  endpoint: 'https://ams3.digitaloceanspaces.com', // Use your region endpoint
+  accessKeyId: process.env.SPACES_KEY,
+  secretAccessKey: process.env.SPACES_SECRET,
 });
 
-// Handler function for generating a signed URL
 export default async function handler(req, res) {
-  if (req.method !== 'POST') {
-    // Only allow POST requests
-    return res.status(405).json({ error: 'Method Not Allowed' });
-  }
+    if (req.method !== 'POST') {
+      // Ensure only POST requests are allowed
+      return res.status(405).json({ error: 'Methods Not Allowed' });
+    }
+}
 
-  const { fileName } = req.body;  // Assuming `fileName` is sent in the POST request body
-
-  if (!fileName) {
-    return res.status(400).json({ error: 'File name is required' });
-  }
+exports.handler = async function (event, context) {
+  const { fileName } = JSON.parse(event.body);  // Only fileName is needed for access
 
   const params = {
-    Bucket: 'thetribeug',  // Replace with your actual bucket name
-    Key: fileName,          // Use the file name provided in the request
-    Expires: 5400           // URL expiration time in seconds (e.g., 1.5 hours)
+    Bucket: 'thetribeug', // Replace with your Space name
+    Key: fileName,
+    Expires: 5400, // Set expiration in seconds (e.g., 3600 for 1 hour)
   };
 
   try {
-    const url = s3.getSignedUrl('getObject', params);  // Generate the signed URL
-    res.status(200).json({ url });  // Return the signed URL in the response
+    const url = s3.getSignedUrl('getObject', params);  // For accessing the object
+    return {
+      statusCode: 200,
+      body: JSON.stringify({ url }),
+    };
   } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: 'Error generating signed URL' });
+    return { statusCode: 500, body: JSON.stringify(error) };
   }
-}
+};
