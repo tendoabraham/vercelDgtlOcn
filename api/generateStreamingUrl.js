@@ -1,34 +1,29 @@
 const AWS = require('aws-sdk');
 
 const s3 = new AWS.S3({
-  endpoint: 'https://ams3.digitaloceanspaces.com', // Use your region endpoint
+  endpoint: 'https://ams3.digitaloceanspaces.com',
   accessKeyId: process.env.SPACES_KEY,
   secretAccessKey: process.env.SPACES_SECRET,
 });
 
 export default async function handler(req, res) {
-    if (req.method !== 'POST') {
-      // Ensure only POST requests are allowed
-      return res.status(405).json({ error: 'Methods Not Allowed' });
-    }
-}
+  if (req.method !== 'POST') {
+    return res.status(405).json({ error: 'Method Not Allowed' });
+  }
 
-exports.handler = async function (event, context) {
-  const { fileName } = JSON.parse(event.body);  // Only fileName is needed for access
+  const { fileName } = req.body;
 
   const params = {
-    Bucket: 'thetribeug', // Replace with your Space name
+    Bucket: 'thetribeug',
     Key: fileName,
-    Expires: 5400, // Set expiration in seconds (e.g., 3600 for 1 hour)
+    Expires: 5400,
   };
 
   try {
-    const url = s3.getSignedUrl('getObject', params);  // For accessing the object
-    return {
-      statusCode: 200,
-      body: JSON.stringify({ url }),
-    };
+    const url = s3.getSignedUrl('getObject', params);
+    res.status(200).json({ url });
   } catch (error) {
-    return { statusCode: 500, body: JSON.stringify(error) };
+    console.error('Error generating signed URL:', error);
+    res.status(500).json({ error: 'Error generating signed URL', details: error.message });
   }
-};
+}
