@@ -1,3 +1,12 @@
+const AWS = require('aws-sdk');
+
+const s3 = new AWS.S3({
+  endpoint: 'https://ams3.digitaloceanspaces.com', // DigitalOcean Spaces endpoint
+  accessKeyId: process.env.SPACES_KEY,
+  secretAccessKey: process.env.SPACES_SECRET,
+});
+
+
 export default async function handler(req, res) {
     res.setHeader('Access-Control-Allow-Origin', '*'); // Allow all origins (for testing)
     res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS'); // Allow POST and preflight OPTIONS
