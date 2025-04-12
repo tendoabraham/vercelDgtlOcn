@@ -16,7 +16,7 @@ export default async function handler(req, res) {
     return res.status(405).json({ error: 'Method not allowed' });
   }
 
-  const { name, email, message } = req.body;
+  const { name, email, title, stage, type, description, category, audience, links } = req.body;
 
   // Create a transporter using Gmail
 //   const transporter = nodemailer.createTransport({
@@ -27,6 +27,114 @@ export default async function handler(req, res) {
 //     },
 //   });
 
+const html = `
+<!DOCTYPE html>
+<html>
+  <head>
+    <style>
+      body {
+        font-family: 'Arial', sans-serif;
+        color: #1a1a1a;
+        font-size: 14px;
+      }
+      table {
+        width: 100%;
+        border-collapse: collapse;
+      }
+      .label {
+        font-weight: 600;
+        color: #555;
+        padding: 8px 0;
+      }
+      .value {
+        color: #1a1a1a;
+        padding: 8px 0;
+      }
+      .section-title {
+        font-weight: bold;
+        margin-top: 20px;
+        border-top: 1px solid #ddd;
+        padding-top: 10px;
+      }
+      .separator-row td {
+        padding: 0px 0;
+        border-top: 1px solid #ddd;
+      }
+      a {
+        color: #1a73e8;
+        text-decoration: none;
+      }
+    </style>
+  </head>
+  <body>
+    <table>
+        <tr>
+        <td class="label">Creator details</td>
+        <td class="label">Name</td>
+      </tr>
+      <tr>
+        <td class="label"></td>
+        <td class="value">${name}</td>
+      </tr>
+      <tr>
+        <td class="label"></td>
+        <td class="label">Email</td>
+      </tr>
+         <tr>
+        <td class="label"></td>
+        <td class="value">${email}</td>
+      </tr>
+      <tr class="separator-row"><td colspan="2"></td></tr>
+        <tr>
+        <td class="label">Content Stage & Type</td>
+        <td class="label">Stage</td>
+      </tr>
+      <tr>
+        <td class="label"></td>
+        <td class="value">${stage}</td>
+      </tr>
+      <tr>
+      <tr>
+        <td class="label"></td>
+        <td class="label">Type</td>
+      </tr>
+      <td class="label"></td>
+      <td class="value">${type}</td>
+      </tr>
+      <tr class="separator-row"><td colspan="2"></td></tr>
+      <tr>
+        <td class="label">Content Details</td>
+        <td class="label">Title</td>
+      </tr>
+      <tr>
+        <td class="label"></td>
+        <td class="value">${title}</td>
+      </tr>
+      <tr>
+        <td class="label"></td>
+        <td class="label">Description/Synopsis</td>
+      </tr>
+         <tr>
+        <td class="label"></td>
+        <td class="value">${description}</td>
+      </tr>
+      <tr>
+        <td class="label">Category</td>
+        <td class="value">${category}</td>
+      </tr>
+      <tr>
+        <td class="label">Target Audience</td>
+        <td class="value">${audience}</td>
+      </tr>
+      <tr>
+          <td class="label">Content Link(s)</td>
+          <td class="value">
+            ${links.map(link => `<a href="${link}">${link}</a>`).join('<br/>')}
+          </td>
+        </tr>
+    </table>
+  </body>
+</html>`;
 
   try {
 
@@ -44,12 +152,7 @@ export default async function handler(req, res) {
       from: `"Creators" <${process.env.SMTP_USER}>`,
       to: 'appsofimpact@gmail.com',
       subject: 'Creator Content Submission',
-      html: `
-        <h2>New Submission</h2>
-        <p><strong>Name:</strong> ${name}</p>
-        <p><strong>Email:</strong> ${email}</p>
-        <p><strong>Message:</strong> ${message}</p>
-      `,
+      html,
     });
 
     res.status(200).json({ success: true });
