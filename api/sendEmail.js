@@ -33,7 +33,7 @@ const html = `
   <head>
     <style>
       body {
-        font-family: 'Arial', sans-serif;
+        font-family: 'Trebuchet MS', 'Verdana', 'Segoe UI', 'Helvetica Neue', sans-serif;
         color: #1a1a1a;
         font-size: 14px;
       }
@@ -48,7 +48,8 @@ const html = `
       }
       .value {
         color: #1a1a1a;
-        padding: 8px 0;
+        padding-top: 0px;
+        padding-bottom: 8px;
       }
       .section-title {
         font-weight: bold;
@@ -67,6 +68,7 @@ const html = `
     </style>
   </head>
   <body>
+  <h2>Content Submission</h2>
     <table>
         <tr>
         <td class="label">Creator details</td>
@@ -132,6 +134,16 @@ const html = `
             ${links.map(link => `<a href="${link}">${link}</a>`).join('<br/>')}
           </td>
         </tr>
+     <tr>
+        <td colspan="2" style="text-align: right; padding: 20px 0;">
+          <img
+          src="https://thetribeug.ams3.cdn.digitaloceanspaces.com/logoRed.png"
+          alt="The Tribe Africa"
+          width="200"
+          style="display: block; margin: 0;"
+          >
+          </td>
+          </tr>
     </table>
   </body>
 </html>`;
