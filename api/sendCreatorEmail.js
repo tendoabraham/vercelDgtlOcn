@@ -80,8 +80,6 @@ const html = `
     <a href="https://the-tribe-ug-web-admin.vercel.app" class="button" >Access The Tribe Creators Portal Here</a>
     <p  class="value" style="margin-top: 20px;">For your security, please change your password after logging in for the first time.</p>
 
-    <p  class="value">If you have any questions or need assistance, feel free to contact our support team.</p>
-
     <p  class="value">Best regards,<br>
     <strong>The Tribe Team</strong></p>
 
