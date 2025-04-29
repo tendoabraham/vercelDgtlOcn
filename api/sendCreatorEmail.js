@@ -66,7 +66,7 @@ const html = `
     <p  class="value">Hi <strong>${name}</strong>,</p>
     <p class="value">We're excited to have you as a content creator on our platform. Below are your login credentials to get started:</p>
 
-    <table style="margin-top: 20px; width: 100%; border-collapse: collapse;">
+    <table style="margin-top: 20px; margin-bottom: 20px; width: 100%; border-collapse: collapse;">
       <tr>
         <td style="padding: 8px; font-weight: bold;">Login Email:</td>
         <td style="padding: 8px;">${email}</td>
@@ -77,6 +77,7 @@ const html = `
       </tr>
     </table>
 
+    <a href="https://the-tribe-ug-web-admin.vercel.app" class="button" >Access The Tribe Creators Portal Here</a>
     <p  class="value" style="margin-top: 20px;">For your security, please change your password after logging in for the first time.</p>
 
     <p  class="value">If you have any questions or need assistance, feel free to contact our support team.</p>
