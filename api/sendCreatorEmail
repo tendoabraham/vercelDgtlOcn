@@ -105,8 +105,7 @@ const html = `
 
     await transporter.sendMail({
       from: `"Creators" <${process.env.SMTP_USER}>`,
-      to: email,
-      <!-- to: 'appsofimpact@gmail.com', -->
+      to: 'appsofimpact@gmail.com',
       subject: 'Creator Content Submission',
       html,
     });
