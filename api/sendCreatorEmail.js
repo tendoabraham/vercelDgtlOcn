@@ -63,17 +63,17 @@ const html = `
 <body style="font-family: 'Quicksand', sans-serif; background-color: #f4f4f4; padding: 20px; color: #333333;">
   <div style="max-width: 600px; margin: auto; background-color: #ffffff; border-radius: 8px; padding: 30px; box-shadow: 0 0 10px rgba(0,0,0,0.05);">
     <h2 style="color: #FF0000;">Welcome to The Tribe!</h2>
-    <p  class="value">Hi <strong>{{name}}</strong>,</p>
+    <p  class="value">Hi <strong>${name}</strong>,</p>
     <p class="value">We're excited to have you as a content creator on our platform. Below are your login credentials to get started:</p>
 
     <table style="margin-top: 20px; width: 100%; border-collapse: collapse;">
       <tr>
         <td style="padding: 8px; font-weight: bold;">Login Email:</td>
-        <td style="padding: 8px;">{{email}}</td>
+        <td style="padding: 8px;">${email}</td>
       </tr>
       <tr style="background-color: #f9f9f9;">
         <td style="padding: 8px; font-weight: bold;">Temporary Password:</td>
-        <td style="padding: 8px;">{{password}}</td>
+        <td style="padding: 8px;">${pass}</td>
       </tr>
     </table>
 
@@ -86,7 +86,7 @@ const html = `
 
     <hr style="margin-top: 40px;">
     <p style="font-size: 12px; color: #999999; text-align: center;">
-      © {{year}} The Tribe. All rights reserved.
+      © ${year} The Tribe. All rights reserved.
     </p>
   </div>
 </body>
@@ -105,7 +105,8 @@ const html = `
 
     await transporter.sendMail({
       from: `"Creators" <${process.env.SMTP_USER}>`,
-      to: 'appsofimpact@gmail.com',
+      to: email,
+      // to: 'appsofimpact@gmail.com',
       subject: 'Creator Content Submission',
       html,
     });
