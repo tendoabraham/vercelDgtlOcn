@@ -163,7 +163,7 @@ const html = `
     await transporter.sendMail({
       from: `"Creators" <${process.env.SMTP_USER}>`,
       to: 'appsofimpact@gmail.com',
-      subject: 'Creator Content Submission',
+      subject: 'Content Creator Submission',
       html,
     });
 

@@ -104,8 +104,7 @@ const html = `
     await transporter.sendMail({
       from: `"Creators" <${process.env.SMTP_USER}>`,
       to: email,
-      // to: 'appsofimpact@gmail.com',
-      subject: 'Creator Content Submission',
+      subject: 'The Tribe Africa Portal Profile',
       html,
     });
 
